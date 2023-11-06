@@ -1,42 +1,50 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Proyecto1.Models;
+using Proyecto2Client.Interfaces;
 
 namespace Proyecto1.Controllers
 {
     public class TiqueteController : Controller
     {
-        // GET: TiqueteController
-        public ActionResult Index()
+        private readonly ITiqueteServices _iTiqueteServices;
+
+        public TiqueteController(ITiqueteServices tiqueteServices)
         {
-            List<Tiquete> tiquetes = Cache.GetAllTiquetes();
+            _iTiqueteServices = tiqueteServices;
+        }
+
+        // GET: TiqueteController
+        public async Task<ActionResult> Index()
+        {
+            List<Tiquete> tiquetes;
+
+            tiquetes = await _iTiqueteServices.GetAllTiquetes();
             return View(tiquetes);
         }
 
-        // GET: TiqueteController/Create
+        // GET: TiqueteControllet/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: TiqueteController/Create
+        // POST: TiqueteControllet/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Tiquete tiquete)
+        public async Task<ActionResult> Create(Tiquete tiquete)
         {
             try
             {
-                List<Tiquete> tiquetes = Cache.GetAllTiquetes();
-                if (tiquetes.Count == 0)
+                if (ModelState.IsValid)
                 {
-                    tiquete.Id = 1;
+                    await _iTiqueteServices.AddTiquete(tiquete);
+                    return RedirectToAction(nameof(Index));
                 }
                 else
                 {
-                    tiquete.Id = tiquetes.Last().Id + 1;
+                    return View();
                 }
-                Cache.AddTiquete(tiquete);
-                return RedirectToAction(nameof(Index));
             }
             catch
             {
@@ -44,23 +52,24 @@ namespace Proyecto1.Controllers
             }
         }
 
-        // GET: TiqueteController/Edit/5
-        public ActionResult Edit(int id)
+        // GET: TiqueteControllet/Edit/5
+        public async Task<ActionResult> Edit(int id)
         {
-            Tiquete tiquete = Cache.GetTiqueteXId(id);
+            Tiquete tiquete;
+            tiquete = await _iTiqueteServices.GetTiqueteXId(id);
             return View(tiquete);
         }
 
-        // POST: TiqueteController/Edit/5
+        // POST: TiqueteControllet/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Tiquete tiquete)
+        public async Task<ActionResult> Edit(Tiquete tiquete)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    Cache.UpdateTiquete(tiquete);
+                    await _iTiqueteServices.UpdateTiquete(tiquete);
                     return RedirectToAction(nameof(Index));
                 }
                 return View();
@@ -71,19 +80,20 @@ namespace Proyecto1.Controllers
             }
         }
 
-        // GET: TiqueteController/Delete/5
-        public ActionResult Delete(int id)
+        // GET: TiqueteControllet/Delete/5
+        public async Task<ActionResult> Delete(int id)
         {
-            Tiquete tiquete = Cache.GetTiqueteXId(id);
+            Tiquete tiquete;
+            tiquete = await _iTiqueteServices.GetTiqueteXId(id);
             return View(tiquete);
         }
 
-        // POST: TiqueteController/Delete/5
+        // POST: TiqueteControllet/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(Tiquete tiquete)
+        public async Task<ActionResult> Delete(Tiquete tiquete)
         {
-            Cache.DeleteTiquete(tiquete.Id);
+            await _iTiqueteServices.DeleteTiquete(tiquete.Id);
             return RedirectToAction(nameof(Index));
         }
     }

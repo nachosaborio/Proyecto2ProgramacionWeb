@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IEmpleadoServices, EmpleadoServices>();
 builder.Services.AddScoped<IParqueoServices, ParqueoServices>();
+builder.Services.AddScoped<ITiqueteServices, TiqueteServices>();
 
 var app = builder.Build();
 
