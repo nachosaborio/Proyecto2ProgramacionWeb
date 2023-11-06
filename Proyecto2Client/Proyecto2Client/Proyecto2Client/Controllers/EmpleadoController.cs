@@ -1,22 +1,26 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Proyecto1.Models;
+using Proyecto2Client.Interfaces;
 
 namespace Proyecto1.Controllers
 {
     public class EmpleadoController : Controller
     {
-        // GET: EmpleadoControllet
-        public ActionResult Index()
+        private readonly IEmpleadoServices _iEmpleadoServices;
+
+        public EmpleadoController(IEmpleadoServices empleadoServices)
         {
-            List<Empleado> empleados = Cache.GetAllEmpleados();
-            return View(empleados);
+            _iEmpleadoServices = empleadoServices;
         }
 
-        // GET: EmpleadoControllet/Details/5
-        public ActionResult Details(int id)
+        // GET: EmpleadoControllet
+        public async Task<ActionResult> Index()
         {
-            return View();
+            List<Empleado> empleados;
+            
+            empleados = await _iEmpleadoServices.GetAllEmpleados();
+            return View(empleados);
         }
 
         // GET: EmpleadoControllet/Create
@@ -28,13 +32,13 @@ namespace Proyecto1.Controllers
         // POST: EmpleadoControllet/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Empleado empleado)
+        public async Task<ActionResult> Create(Empleado empleado)
         {
             try
             {
                 if(ModelState.IsValid)
                 {
-                    Cache.AddEmpleado(empleado);
+                    await _iEmpleadoServices.AddEmpleado(empleado);
                     return RedirectToAction(nameof(Index));
                 }
                 else { 
@@ -48,22 +52,23 @@ namespace Proyecto1.Controllers
         }
 
         // GET: EmpleadoControllet/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            Empleado empleado = Cache.GetEmpleadoXId(id);
+            Empleado empleado;
+            empleado = await _iEmpleadoServices.GetEmpleadoXId(id);
             return View(empleado);
         }
 
         // POST: EmpleadoControllet/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Empleado empleado)
+        public async Task<ActionResult> Edit(Empleado empleado)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    Cache.UpdateEmpleado(empleado);
+                    await _iEmpleadoServices.UpdateEmpleado(empleado);
                     return RedirectToAction(nameof(Index));
                 }
                 return View();
@@ -75,18 +80,19 @@ namespace Proyecto1.Controllers
         }
 
         // GET: EmpleadoControllet/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            Empleado empleado = Cache.GetEmpleadoXId(id);
+            Empleado empleado;
+            empleado = await _iEmpleadoServices.GetEmpleadoXId(id);
             return View(empleado); 
         }
 
         // POST: EmpleadoControllet/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(Empleado empleado)
+        public async Task<ActionResult> Delete(Empleado empleado)
         {
-            Cache.DeleteEmpleado(empleado.Id);
+            await _iEmpleadoServices.DeleteEmpleado(empleado.Id);
             return RedirectToAction(nameof(Index));
         }
     }

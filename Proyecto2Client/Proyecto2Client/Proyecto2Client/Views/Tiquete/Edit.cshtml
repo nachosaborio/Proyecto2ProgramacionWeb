@@ -1,0 +1,56 @@
+﻿@model Proyecto1.Models.Tiquete
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Editar Tiquete</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <p>ID: @Model.Id</p>
+            </div>
+            <div class="form-group">
+                <label asp-for="FechaYHoraEntrada" class="control-label"></label>
+                <input asp-for="FechaYHoraEntrada" class="form-control" />
+                <span asp-validation-for="FechaYHoraEntrada" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FechaYHoraSalida" class="control-label"></label>
+                <input asp-for="FechaYHoraSalida" class="form-control" />
+                <span asp-validation-for="FechaYHoraSalida" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Placa" class="control-label"></label>
+                <input asp-for="Placa" class="form-control" />
+                <span asp-validation-for="Placa" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TarifaPorHora" class="control-label"></label>
+                <input asp-for="TarifaPorHora" class="form-control" />
+                <span asp-validation-for="TarifaPorHora" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TarifaPorMediaHora" class="control-label"></label>
+                <input asp-for="TarifaPorMediaHora" class="form-control" />
+                <span asp-validation-for="TarifaPorMediaHora" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <br />
+    <a class="btn btn-secondary" asp-action="Index">Volver a la lista</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

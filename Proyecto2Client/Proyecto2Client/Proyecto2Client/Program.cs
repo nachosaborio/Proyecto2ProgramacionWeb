@@ -1,7 +1,11 @@
+using Proyecto2Client.Interfaces;
+using Proyecto2Client.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IEmpleadoServices, EmpleadoServices>();
 
 var app = builder.Build();
 

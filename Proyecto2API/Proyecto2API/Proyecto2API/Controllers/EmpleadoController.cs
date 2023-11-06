@@ -1,43 +1,42 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using Proyecto1.Models;
 
 namespace Proyecto2API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Empleado")]
     [ApiController]
     public class EmpleadoController : ControllerBase
     {
-        // GET: api/<EmpleadoController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        [HttpPost("AddEmpleado")]
+        public ActionResult AddEmpleado([FromBody] Empleado value)
         {
-            return new string[] { "value1", "value2" };
+            Cache.AddEmpleado(value);
+            return Ok(value);
         }
 
-        // GET api/<EmpleadoController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("GetAllEmpleados")]
+        public ActionResult<IEnumerable<Empleado>> GetAllEmpleados()
         {
-            return "value";
+            return Ok(Cache.GetAllEmpleados());
         }
 
-        // POST api/<EmpleadoController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
+        [HttpGet("GetEmpleadoXId/{id}")]
+        public ActionResult<Empleado> GetEmpleadoXId(int id) { 
+            return Ok(Cache.GetEmpleadoXId(id));
         }
 
-        // PUT api/<EmpleadoController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPost("UpdateEmpleado")]
+        public ActionResult UpdateEmpleado([FromBody] Empleado value)
         {
+            Cache.UpdateEmpleado(value);
+            return Ok(value);
         }
 
-        // DELETE api/<EmpleadoController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("DeleteEmpleado/{id}")]
+        public ActionResult DeleteEmpleado(int id)
         {
+            Cache.DeleteEmpleado(id);
+            return Ok();
         }
     }
 }
