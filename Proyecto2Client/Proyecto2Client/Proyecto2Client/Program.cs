@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IEmpleadoServices, EmpleadoServices>();
+builder.Services.AddScoped<IParqueoServices, ParqueoServices>();
 
 var app = builder.Build();
 
