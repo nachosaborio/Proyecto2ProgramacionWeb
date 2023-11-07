@@ -11,6 +11,11 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
+                <label asp-for="Parqueo" class="control-label"></label>
+                <input asp-for="Parqueo" class="form-control" />
+                <span asp-validation-for="Parqueo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="FechaYHoraEntrada" class="control-label"></label>
                 <input asp-for="FechaYHoraEntrada" class="form-control" />
                 <span asp-validation-for="FechaYHoraEntrada" class="text-danger"></span>

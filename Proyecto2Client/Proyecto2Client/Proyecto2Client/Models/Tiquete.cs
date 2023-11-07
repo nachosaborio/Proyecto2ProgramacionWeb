@@ -7,6 +7,10 @@ namespace Proyecto1.Models
     {
         public int Id { get; set; }
 
+        [Required(ErrorMessage = "El parqueo es requerido")]
+        [Display(Name = "Parqueo")]
+        public int Parqueo { get; set; }
+
         [Required(ErrorMessage = "La fecha y hora de entrada es requerida")]
         [Display(Name = "Fecha y hora de entrada")]
         public DateTime FechaYHoraEntrada { get; set; }

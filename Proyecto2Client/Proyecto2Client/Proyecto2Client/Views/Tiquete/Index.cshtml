@@ -15,6 +15,9 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.Parqueo)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.FechaYHoraEntrada)
             </th>
             <th>
@@ -35,6 +38,9 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Parqueo)
+                </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FechaYHoraEntrada)
             </td>

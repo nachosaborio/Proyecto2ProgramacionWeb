@@ -15,6 +15,11 @@
                 <p>Número de empleado: @Model.Id</p>
             </div>
             <div class="form-group">
+                <label asp-for="Parqueo" class="control-label"></label>
+                <input asp-for="Parqueo" class="form-control" />
+                <span asp-validation-for="Parqueo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="FechaIngreso" class="control-label"></label>
                 <input asp-for="FechaIngreso" class="form-control" />
                 <span asp-validation-for="FechaIngreso" class="text-danger"></span>

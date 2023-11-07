@@ -8,6 +8,10 @@ namespace Proyecto1.Models
         [Display(Name = "Número de empleado")]
         public int Id { get; set; }
 
+        [Required(ErrorMessage = "El parqueo es requerido")]
+        [Display(Name = "Parqueo")]
+        public int Parqueo { get; set; }
+
         [Required(ErrorMessage = "La fecha de ingreso es requerida")]
         [Display(Name = "Fecha de ingreso")]
         [DataType(DataType.Date)]

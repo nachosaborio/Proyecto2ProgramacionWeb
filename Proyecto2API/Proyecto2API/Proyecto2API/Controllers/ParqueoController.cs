@@ -7,6 +7,18 @@ namespace Proyecto2API.Controllers
     [ApiController]
     public class ParqueoController : ControllerBase
     {
+        public ParqueoController()
+        {
+            Parqueo parqueo = new Parqueo { 
+                    Id = 1,
+                    Nombre = "Parqueo 1",
+                    CapacidadMaxima = 50,
+                    HoraApertura = new DateTime(1,1,1,7,0,0),
+                    HoraCierrre = new DateTime(1,1,1,19,0,0)
+                };
+            AddParqueo(parqueo);
+        }
+
         [HttpPost("AddParqueo")]
         public ActionResult AddParqueo([FromBody] Parqueo value)
         {
